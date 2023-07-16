@@ -10,7 +10,13 @@ jobs:
 
     steps:
 
-      - name: Checkout
+      - name: LastRelease
+        id: last
         run: |
-          tag=`gh release view -q .tag_name`
+          tag=`gh release view --json tagName --jq .tagName`
           echo $tag
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+
+          
+      
