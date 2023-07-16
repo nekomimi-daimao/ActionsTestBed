@@ -35,8 +35,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            label=${{ steps.detect.outputs.label }}
-            echo $label
             github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
