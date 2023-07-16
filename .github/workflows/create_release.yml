@@ -10,10 +10,16 @@ jobs:
 
     steps:
 
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+
       - name: LastRelease
         id: last
         env: 
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           last_tag=`gh release view --json tagName --jq .tagName`
           echo $last_tag
