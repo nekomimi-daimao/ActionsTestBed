@@ -28,9 +28,6 @@ jobs:
             doc* ) label=doc ;;
             * ) label=other ;;
           esac
-          echo github.head_ref
-          echo $github.head_ref
-          echo ${{ github.head_ref }}
           echo $label          
           echo "label=$label" >> "$GITHUB_OUTPUT"
       
@@ -39,10 +36,11 @@ jobs:
         with:
           script: |
             label=${{ steps.detect.outputs.label }}
+            echo $label
             github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              labels: [$label]
+              labels: [$label, "invalid"]
             })
 
