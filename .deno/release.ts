@@ -22,7 +22,7 @@ const owner = Deno.env.get("OWNER");
 const repo = Deno.env.get("REPO");
 
 // 作成されるであろうリリースノートを取得
-const mayRelease = await octokit.request(`POST /repos/${owner}/${REPO}/releases/generate-notes`, {
+const mayRelease = await octokit.request(`POST /repos/${owner}/${repo}/releases/generate-notes`, {
     owner: $owner,
     repo: $repo,
     tag_name: 'v100.0.0',
