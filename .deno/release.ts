@@ -29,11 +29,14 @@ const token = Deno.env.get("GITHUB_TOKEN");
 // })
 
 const data = {
+    owner: owner,
+    repo: repo,
     tag_name: "v100.0.0",
     target_commitish: "main",
     previous_tag_name: last_tag,
 };
 
+console.log(Json.stringify(data));
 const result = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/generate-notes`, {
     method: "POST",
     headers: {
