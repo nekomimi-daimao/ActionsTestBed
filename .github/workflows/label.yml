@@ -1,0 +1,45 @@
+name: label
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+
+jobs:
+  label:  
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions
+      pull-requests: write
+
+    steps:
+
+      - name: Detect Label
+        id: detect
+        run: |
+          label=""
+          case github.head_ref in
+            added* ) label=added ;;
+            changed* ) label=changed ;;
+            deprecated* ) label=deprecated ;;
+            removed* ) label=removed ;;
+            fixed* ) label=fixed ;;
+            security* ) label=security ;;
+            doc* ) label=doc ;;
+            * ) label=other ;;
+          esac
+          echo "label=$label" >> "$GITHUB_OUTPUT"
+      
+      - name: Add Label
+        uses: actions/github-script@v2.1.0
+        with:
+          script: |
+            label=${{ steps.detect.outputs.label }}
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: [$label]
+            })
+
