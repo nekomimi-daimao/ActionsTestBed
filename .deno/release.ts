@@ -36,12 +36,12 @@ const data = {
     previous_tag_name: last_tag,
 };
 
-console.log(JSON.stringify(data));
+console.log(`https://api.github.com/repos/${owner}/${repo}/releases/generate-notes`);
 const result = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/generate-notes`, {
     method: "POST",
     headers: {
         "Accept": "application/vnd.github+json",
-        "Authorization": token,
+        "Authorization": `Bearer ${token}`,
         "X-GitHub-Api-Version": "2022-11-28",
     },
     body: JSON.stringify(data),
