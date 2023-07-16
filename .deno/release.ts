@@ -36,7 +36,7 @@ const data = {
     previous_tag_name: last_tag,
 };
 
-console.log(Json.stringify(data));
+console.log(JSON.stringify(data));
 const result = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/generate-notes`, {
     method: "POST",
     headers: {
