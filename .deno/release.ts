@@ -33,7 +33,7 @@ const mayRelease = await octokit.request(`POST /repos/${owner}/${repo}/releases/
     }
 })
 
-console.log(mayRelease);
+console.log(mayRelease.data);
 
 // 内容を元にセマンティックバージョンを上げる
 // もう一度リリースノートを作成してCHANGELOGに追記
