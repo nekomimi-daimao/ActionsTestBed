@@ -18,7 +18,7 @@ jobs:
         id: detect
         run: |
           label=""
-          case $github.head_ref in
+          case ${{ github.head_ref }} in
             added* ) label=added ;;
             changed* ) label=changed ;;
             deprecated* ) label=deprecated ;;
@@ -30,6 +30,7 @@ jobs:
           esac
           echo github.head_ref
           echo $github.head_ref
+          echo ${{ github.head_ref }}
           echo $label          
           echo "label=$label" >> "$GITHUB_OUTPUT"
       
