@@ -23,11 +23,11 @@ const repo = Deno.env.get("REPO");
 
 // 作成されるであろうリリースノートを取得
 const mayRelease = await octokit.request(`POST /repos/${owner}/${repo}/releases/generate-notes`, {
-    owner: $owner,
-    repo: $repo,
+    owner: owner,
+    repo: repo,
     tag_name: 'v100.0.0',
     target_commitish: 'main',
-    previous_tag_name: $last_tag,
+    previous_tag_name: last_tag,
     headers: {
         'X-GitHub-Api-Version': '2022-11-28'
     }
