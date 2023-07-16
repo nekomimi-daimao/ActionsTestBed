@@ -13,10 +13,36 @@ jobs:
       - name: LastRelease
         id: last
         run: |
-          tag=`gh release view --json tagName --jq .tagName`
-          echo $tag
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          last_tag=`gh release view --json tagName --jq .tagName`
+          echo $last_tag
+          echo "last_tag=$last_tag" >> "$GITHUB_OUTPUT"
+          echo "repo=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_OUTPUT
+
+      - name : Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LAST_TAG: ${{ steps.last.outputs.last_tag }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ steps.last.outputs.repo }}
+        run: |
+          deno run --allow-read --allow-env .deno/release.ts
+        
 
 
-          
-      
+
+
+
+
+
+# 最後のリリースのタグを取得
+# 作成されるであろうリリースノートを取得
+# 内容を元にセマンティックバージョンを上げる
+# もう一度リリースノートを作成してCHANGELOGに追記
+# READMEとCHAGELOGをコピー
+# コミットする
+# タグを付ける
+# プッシュ
+# タグでリリースを作成
