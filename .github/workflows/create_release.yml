@@ -18,10 +18,12 @@ jobs:
           echo "last_tag=$last_tag" >> "$GITHUB_OUTPUT"
           echo "repo=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_OUTPUT
 
-      - name : Deno
+      - name : Setup Deno
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
+          
+      - name : Run Deno
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LAST_TAG: ${{ steps.last.outputs.last_tag }}
