@@ -2,13 +2,14 @@ name: label
 
 on:
   pull_request:
-    types: [opened, reopened]
-
+    types:
+          - opened
+          - reopened
 jobs:
   label:  
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    permissions
+    permissions:
       pull-requests: write
 
     steps:
@@ -27,6 +28,7 @@ jobs:
             doc* ) label=doc ;;
             * ) label=other ;;
           esac
+          echo $label
           echo "label=$label" >> "$GITHUB_OUTPUT"
       
       - name: Add Label
