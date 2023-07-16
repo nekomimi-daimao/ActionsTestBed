@@ -38,7 +38,8 @@ jobs:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ steps.last.outputs.repo }}
         run: |
-          deno run --allow-read --allow-env --allow-net .deno/release.ts
+          result=`deno run --allow-read --allow-env --allow-net .deno/release.ts`
+          echo $result
         
 
 
