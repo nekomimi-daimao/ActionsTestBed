@@ -1,0 +1,16 @@
+name: create release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+
+      - name: Checkout
+        run: |
+          tag=`gh release view -q .tag_name`
+          echo $tag
