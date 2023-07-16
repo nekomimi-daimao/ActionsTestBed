@@ -32,7 +32,7 @@ jobs:
           echo "label=$label" >> "$GITHUB_OUTPUT"
       
       - name: Add Label
-        uses: actions/github-script@v2.1.0
+        uses: actions/github-script@v6
         with:
           script: |
             label=${{ steps.detect.outputs.label }}
