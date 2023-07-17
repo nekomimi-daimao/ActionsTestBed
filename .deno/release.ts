@@ -95,7 +95,6 @@ while (true) {
     },);
     const parsed = await responseCurrentRelease.json();
     parsed.filter(r => !r.draft).forEach((v) => {
-        console.log(v);
         currentReleases.push(`## ${v.name}`);
         currentReleases.push(v.body.replace("<!-- Release notes generated using configuration in .github/release.yml at main -->", ""));
     });

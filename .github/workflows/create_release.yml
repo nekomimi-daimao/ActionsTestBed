@@ -32,16 +32,20 @@ jobs:
           deno-version: v1.x
           
       - name : Run Deno
+        id: deno
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LAST_TAG: ${{ steps.last.outputs.last_tag }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ steps.last.outputs.repo }}
         run: |
-          deno run --allow-read  --allow-write --allow-env --allow-net .deno/release.ts
-          
+          next=`deno run --allow-read  --allow-write --allow-env --allow-net .deno/release.ts`
+          echo $next
+          echo "next=$next" >> "$GITHUB_OUTPUT"
+
       - name: Commit & Push
         run: |
+          echo ${{ steps.deno.outputs.next }}
           git config user.name "actions-user"
           git config user.email "action@github.com"
           git add .
