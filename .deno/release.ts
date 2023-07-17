@@ -34,7 +34,8 @@ const responseMayRelease = await fetch(`https://api.github.com/repos/${owner}/${
     body: JSON.stringify(dataMayRelease),
 },);
 
-const mayRelease: string = await responseMayRelease.json().body;
+const mayRelease = await responseMayRelease.json().body;
+console.log(mayRelease);
 
 let increment = "";
 const arrayMajor = ["### Removed",];
