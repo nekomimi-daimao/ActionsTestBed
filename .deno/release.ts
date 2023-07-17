@@ -74,8 +74,8 @@ const responseTrueRelease = await fetch(`https://api.github.com/repos/${owner}/$
 const trueRelease: string = await responseTrueRelease.json().body;
 
 // 現在のリリースノートをすべて取得
-let current = [];
-current.push(trueRelease);
+let currentReleases = [];
+currentReleases.push(trueRelease);
 let pages = 0;
 const per = 100;
 while (true) {
@@ -94,13 +94,13 @@ while (true) {
         body: JSON.stringify(data),
     },);
     const parsed = JSON.parse(responseCurrentRelease.json());
-    current.push(parsed.filter(r => !r.draft).map(r => r.body));
+    currentReleases.push(parsed.filter(r => !r.draft).map(r => r.body));
     if (parsed.length < per) {
         break;
     }
 }
 
-Deno.writeTextFileSync("../CHANGELOG.md", current.join("\\r\\n"));
+Deno.writeTextFileSync("../CHANGELOG.md", currentReleases.join("\\r\\n"));
 
 console.log(`v${next.format()}`);
 
