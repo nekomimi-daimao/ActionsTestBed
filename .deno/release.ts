@@ -40,8 +40,7 @@ let increment = "";
 const arrayMajor = ["### Removed",];
 const arrayMinor = ["### Added", "### Changed", "### Deprecated",];
 const arrayPatch = ["### Fixed", "### Security"];
-const includes = v => mayRelease.includes(v);
-if (arrayMajor.some(includes)) {
+if (arrayMajor.some(v => mayRelease.includes(v))) {
     increment = "major";
 } else if (arrayMinor.some(v => mayRelease.includes(v))) {
     increment = "minor";
