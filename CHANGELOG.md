@@ -1,12 +1,27 @@
-## v1.1.0
+## v1.1.1
 
+
+## What's Changed
+### Fixed
+* extra usage  by @nekomimi-daimao in https://github.com/nekomimi-daimao/ActionsTestBed/pull/8
+
+
+**Full Changelog**: https://github.com/nekomimi-daimao/ActionsTestBed/compare/v1.1.0...v1.1.1
+## v1.1.0
+<!-- Release notes generated using configuration in .github/release.yml at v1.1.0 -->
 
 ## What's Changed
 ### Added
 * l by @nekomimi-daimao in https://github.com/nekomimi-daimao/ActionsTestBed/pull/7
+### Removed
+* sem by @nekomimi-daimao in https://github.com/nekomimi-daimao/ActionsTestBed/pull/6
+### Fixed
+* a by @nekomimi-daimao in https://github.com/nekomimi-daimao/ActionsTestBed/pull/4
+### Doc
+* a by @nekomimi-daimao in https://github.com/nekomimi-daimao/ActionsTestBed/pull/5
 
 
-**Full Changelog**: https://github.com/nekomimi-daimao/ActionsTestBed/compare/v1.0.0...v1.1.0
+**Full Changelog**: https://github.com/nekomimi-daimao/ActionsTestBed/compare/v0.0.2...v1.1.0
 ## v1.0.0
 <!-- Release notes generated using configuration in .github/release.yml at v1.0.0 -->
 
