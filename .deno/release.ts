@@ -67,7 +67,7 @@ const responseTrueRelease = await fetch(`https://api.github.com/repos/${owner}/$
         "Authorization": `Bearer ${token}`,
         "X-GitHub-Api-Version": "2022-11-28",
     },
-    body: JSON.stringify(dataMayRelease),
+    body: JSON.stringify(dataTrueRelease),
 },);
 
 // もう一度リリースノートを作成してCHANGELOGに追記
@@ -95,6 +95,7 @@ while (true) {
     },);
     const parsed = await responseCurrentRelease.json();
     parsed.filter(r => !r.draft).forEach((v) => {
+        console.log(v);
         currentReleases.push(`## ${v.name}`);
         currentReleases.push(v.body.replace("<!-- Release notes generated using configuration in .github/release.yml at main -->", ""));
     });
@@ -103,7 +104,7 @@ while (true) {
     }
 }
 
-Deno.writeTextFileSync("CHANGELOG.md", currentReleases.join("\\r\\n"));
+Deno.writeTextFileSync("CHANGELOG.md", currentReleases.join("\n"));
 
 console.log(`v${next}`);
 
