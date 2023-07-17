@@ -34,9 +34,10 @@ const responseMayRelease = await fetch(`https://api.github.com/repos/${owner}/${
     body: JSON.stringify(dataMayRelease),
 },);
 
-const mayRelease = await responseMayRelease.json().body;
+const mayReleaseJson = await responseMayRelease.json();
+const mayRelease = mayReleaseJson.body;
 console.log("!!!");
-console.log(responseMayRelease.json());
+console.log(mayReleaseJson);
 console.log(mayRelease);
 
 let increment = "";
@@ -73,7 +74,8 @@ const responseTrueRelease = await fetch(`https://api.github.com/repos/${owner}/$
 },);
 
 // もう一度リリースノートを作成してCHANGELOGに追記
-const trueRelease: string = await responseTrueRelease.json().body;
+const trueReleaseJson = await responseTrueRelease.json();
+const trueRelease = trueReleaseJson.body;
 
 // 現在のリリースノートをすべて取得
 let currentReleases = [];
@@ -95,7 +97,7 @@ while (true) {
         },
         body: JSON.stringify(data),
     },);
-    const parsed = JSON.parse(responseCurrentRelease.json());
+    const parsed = JSON.parse(await responseCurrentRelease.json());
     currentReleases.push(parsed.filter(r => !r.draft).map(r => r.body));
     if (parsed.length < per) {
         break;
