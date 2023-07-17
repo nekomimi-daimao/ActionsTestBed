@@ -1,4 +1,4 @@
-<!-- Release notes generated using configuration in .github/release.yml at main -->
+## v100.0.0\r\n
 
 ## What's Changed
 ### Fixed
@@ -7,7 +7,7 @@
 * a by @nekomimi-daimao in https://github.com/nekomimi-daimao/ActionsTestBed/pull/5
 
 
-**Full Changelog**: https://github.com/nekomimi-daimao/ActionsTestBed/compare/v0.0.2...v100.0.0\r\n<!-- Release notes generated using configuration in .github/release.yml at main -->
+**Full Changelog**: https://github.com/nekomimi-daimao/ActionsTestBed/compare/v0.0.2...v100.0.0\r\n## v0.0.2\r\n
 
 ## What's Changed
 ### Added
@@ -18,7 +18,7 @@
 ## New Contributors
 * @nekomimi-daimao made their first contribution in https://github.com/nekomimi-daimao/ActionsTestBed/pull/3
 
-**Full Changelog**: https://github.com/nekomimi-daimao/ActionsTestBed/compare/v0.0.1...v0.0.2,<!-- Release notes generated using configuration in .github/release.yml at main -->
+**Full Changelog**: https://github.com/nekomimi-daimao/ActionsTestBed/compare/v0.0.1...v0.0.2\r\n## v0.0.1\r\n
 
 
 
