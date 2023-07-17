@@ -46,6 +46,7 @@ jobs:
       - name: Commit & Push
         run: |
           version=${{ steps.deno.outputs.next }}
+          git checkout main
           git config user.name "actions-user"
           git config user.email "action@github.com"
           git add .
