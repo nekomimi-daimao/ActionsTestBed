@@ -15,7 +15,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
-          fetch-depth: 0
 
       - name: LastRelease
         id: last
@@ -49,10 +48,10 @@ jobs:
           version=${{ steps.deno.outputs.next }}
           git config user.name "actions-user"
           git config user.email "action@github.com"
-          git checkout main
           git add .
-          git commit -m $version
+          git commit -m "Release ${version}"
           git tag $version
+          git push
           git push --tags
         
       - name: Create Release
