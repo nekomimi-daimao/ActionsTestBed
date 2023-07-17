@@ -36,9 +36,6 @@ const responseMayRelease = await fetch(`https://api.github.com/repos/${owner}/${
 
 const mayReleaseJson = await responseMayRelease.json();
 const mayRelease = mayReleaseJson.body;
-console.log("!!!");
-console.log(mayReleaseJson);
-console.log(mayRelease);
 
 let increment = "";
 const arrayMajor = ["### Removed",];
@@ -58,7 +55,7 @@ const next = semver.increment(current, increment);
 const dataTrueRelease = {
     owner: owner,
     repo: repo,
-    tag_name: `v${next.format()}`,
+    tag_name: `v${next.format}`,
     target_commitish: "main",
     previous_tag_name: last_tag,
 };
@@ -106,7 +103,7 @@ while (true) {
 
 Deno.writeTextFileSync("../CHANGELOG.md", currentReleases.join("\\r\\n"));
 
-console.log(`v${next.format()}`);
+console.log(`v${next.format}`);
 
 // 内容を元にセマンティックバージョンを上げる
 // もう一度リリースノートを作成してCHANGELOGに追記
