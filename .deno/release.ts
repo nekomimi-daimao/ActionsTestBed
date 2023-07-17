@@ -10,25 +10,13 @@ function executeGit(args: string[]): Promise<CommandOutput> {
 }
 
 
-// 最後のリリースのタグを取得
 const last_tag = Deno.env.get("LAST_TAG");
 const owner = Deno.env.get("OWNER");
 const repo = Deno.env.get("REPO");
 const token = Deno.env.get("GITHUB_TOKEN");
 
 // 作成されるであろうリリースノートを取得
-// const mayRelease = await octokit.request(`POST /repos/${owner}/${repo}/releases/generate-notes`, {
-//     owner: owner,
-//     repo: repo,
-//     tag_name: 'v100.0.0',
-//     target_commitish: 'main',
-//     previous_tag_name: last_tag,
-//     headers: {
-//         'X-GitHub-Api-Version': '2022-11-28'
-//     }
-// })
-
-const data = {
+const dataMayRelease = {
     owner: owner,
     repo: repo,
     tag_name: "v100.0.0",
@@ -36,29 +24,85 @@ const data = {
     previous_tag_name: last_tag,
 };
 
-console.log(`https://api.github.com/repos/${owner}/${repo}/releases/generate-notes`);
-const result = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/generate-notes`, {
+const responseMayRelease = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/generate-notes`, {
     method: "POST",
     headers: {
         "Accept": "application/vnd.github+json",
         "Authorization": `Bearer ${token}`,
         "X-GitHub-Api-Version": "2022-11-28",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(dataMayRelease),
 },);
 
-const jjj = await result.json();
-console.log(jjj);
+const mayRelease: string = await responseMayRelease.json().body;
 
-// curl -L \
-//   -X POST \
-//   -H "Accept: application/vnd.github+json" \
-//   -H "Authorization: Bearer <YOUR-TOKEN>"\
-//   -H "X-GitHub-Api-Version: 2022-11-28" \
-//   https://api.github.com/repos/OWNER/REPO/releases/generate-notes \
-//       -d '{"tag_name":"v1.0.0","target_commitish":"main","previous_tag_name":"v0.9.2","configuration_file_path":".github/custom_release_config.yml"}'
-//
+let increment = "";
+const arrayMajor = ["### Removed",];
+const arrayMinor = ["### Added", "### Changed", "### Deprecated",];
+const arrayPatch = ["### Fixed", "### Security"];
+const includes = v => mayRelease.includes(v);
+if (arrayMajor.some(includes)) {
+    increment = "major";
+} else if (arrayMinor.some(v => mayRelease.includes(v))) {
+    increment = "minor";
+} else {
+    increment = "patch";
+}
 
+const current = semver.parse(last_tag);
+const next = semver.increment(current, increment);
+
+const dataTrueRelease = {
+    owner: owner,
+    repo: repo,
+    tag_name: `v${next.format()}`,
+    target_commitish: "main",
+    previous_tag_name: last_tag,
+};
+
+const responseTrueRelease = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/generate-notes`, {
+    method: "POST",
+    headers: {
+        "Accept": "application/vnd.github+json",
+        "Authorization": `Bearer ${token}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+    },
+    body: JSON.stringify(dataMayRelease),
+},);
+
+// もう一度リリースノートを作成してCHANGELOGに追記
+const trueRelease: string = await responseTrueRelease.json().body;
+
+// 現在のリリースノートをすべて取得
+let current = [];
+current.push(trueRelease);
+let pages = 0;
+const per = 100;
+while (true) {
+    pages++;
+    const data = {
+        per_page: per,
+        page: pages,
+    };
+    const responseCurrentRelease = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases`, {
+        method: "GET",
+        headers: {
+            "Accept": "application/vnd.github+json",
+            "Authorization": `Bearer ${token}`,
+            "X-GitHub-Api-Version": "2022-11-28",
+        },
+        body: JSON.stringify(data),
+    },);
+    const parsed = JSON.parse(responseCurrentRelease.json());
+    current.push(parsed.filter(r => !r.draft).map(r => r.body));
+    if (parsed.length < per) {
+        break;
+    }
+}
+
+Deno.writeTextFileSync("../CHANGELOG.md", current.join("\\r\\n"));
+
+console.log(`v${next.format()}`);
 
 // 内容を元にセマンティックバージョンを上げる
 // もう一度リリースノートを作成してCHANGELOGに追記
