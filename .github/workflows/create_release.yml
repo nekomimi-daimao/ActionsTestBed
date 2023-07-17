@@ -54,11 +54,12 @@ jobs:
           git push --tags
         
       - name: Create Release
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           version=${{ steps.deno.outputs.next }}
           owner=${{ github.repository_owner }}
           repo=${{ steps.last.outputs.repo }}
-          token=${{ secrets.GITHUB_TOKEN }}
           gh api \
           --method POST \
           -H "Accept: application/vnd.github+json" \
