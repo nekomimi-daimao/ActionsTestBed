@@ -69,7 +69,7 @@ jobs:
           -f target_commitish='main' \
           -F draft=false \
           -F prerelease=false \
-          -F generate_release_notes=false 
+          -F generate_release_notes=true
 
 
 
