@@ -38,9 +38,8 @@ jobs:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ steps.last.outputs.repo }}
         run: |
-          result=`deno run --allow-read  --allow-write --allow-env --allow-net .deno/release.ts`
-          echo $result
-
+          deno run --allow-read  --allow-write --allow-env --allow-net .deno/release.ts
+          
       - name: Commit & Push
         run: |
           git config user.name "actions-user"
