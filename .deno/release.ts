@@ -93,9 +93,7 @@ while (true) {
             "X-GitHub-Api-Version": "2022-11-28",
         },
     },);
-    const text = await responseCurrentRelease.json();
-    console.log(text);
-    const parsed = JSON.parse(text);
+    const parsed = await responseCurrentRelease.json();
     console.log(parsed);
     currentReleases.push(parsed.filter(r => !r.draft).map(r => r.body));
     if (parsed.length < per) {
