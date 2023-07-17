@@ -50,12 +50,12 @@ if (arrayMajor.some(v => mayRelease.includes(v))) {
 }
 
 const current = semver.parse(last_tag);
-const next = semver.increment(current, increment);
+const next = semver.format(semver.increment(current, increment));
 
 const dataTrueRelease = {
     owner: owner,
     repo: repo,
-    tag_name: `v${next.format}`,
+    tag_name: `v${next}`,
     target_commitish: "main",
     previous_tag_name: last_tag,
 };
@@ -94,7 +94,6 @@ while (true) {
         },
     },);
     const parsed = await responseCurrentRelease.json();
-    console.log(parsed);
     currentReleases.push(parsed.filter(r => !r.draft).map(r => r.body));
     if (parsed.length < per) {
         break;
@@ -103,7 +102,7 @@ while (true) {
 
 Deno.writeTextFileSync("../CHANGELOG.md", currentReleases.join("\\r\\n"));
 
-console.log(`v${next.format}`);
+console.log(`v${next}`);
 
 // 内容を元にセマンティックバージョンを上げる
 // もう一度リリースノートを作成してCHANGELOGに追記
