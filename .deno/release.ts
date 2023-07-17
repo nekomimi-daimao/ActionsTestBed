@@ -35,6 +35,7 @@ const responseMayRelease = await fetch(`https://api.github.com/repos/${owner}/${
 },);
 
 const mayRelease = await responseMayRelease.json().body;
+console.log("!!!");
 console.log(mayRelease);
 
 let increment = "";
