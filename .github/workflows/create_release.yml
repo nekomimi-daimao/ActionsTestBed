@@ -42,6 +42,7 @@ jobs:
           
       - name: Commit & Push
         run: |
+          cat CHANGELOG.md
           git config user.name "actions-user"
           git config user.email "action@github.com"
           git add .
