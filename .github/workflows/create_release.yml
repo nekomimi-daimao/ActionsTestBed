@@ -59,6 +59,7 @@ jobs:
           owner=${{ github.repository_owner }}
           repo=${{ steps.last.outputs.repo }}
           token=${{ secrets.GITHUB_TOKEN }}
+          echo https://api.github.com/repos/${owner}/${repo}/releases
           curl -L \
           -X POST \
           -H "Accept: application/vnd.github+json" \
