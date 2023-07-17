@@ -103,7 +103,7 @@ while (true) {
     }
 }
 
-Deno.writeTextFileSync("CHANGELOG.md", currentReleases.join("\n"), {createNew: true});
+Deno.writeTextFileSync("CHANGELOG.md", currentReleases.join("\n"));
 
 console.log(`v${next}`);
 
