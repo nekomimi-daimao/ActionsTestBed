@@ -72,11 +72,11 @@ const responseTrueRelease = await fetch(`https://api.github.com/repos/${owner}/$
 
 // もう一度リリースノートを作成してCHANGELOGに追記
 const trueReleaseJson = await responseTrueRelease.json();
-const trueRelease = trueReleaseJson.body;
 
 // 現在のリリースノートをすべて取得
 let currentReleases = [];
-currentReleases.push(trueRelease);
+currentReleases.push(`## ${trueReleaseJson.name}`);
+currentReleases.push(trueReleaseJson.body.replace("<!-- Release notes generated using configuration in .github/release.yml at main -->", ""));
 let pages = 0;
 const per = 100;
 while (true) {
@@ -94,13 +94,15 @@ while (true) {
         },
     },);
     const parsed = await responseCurrentRelease.json();
-    currentReleases.push(parsed.filter(r => !r.draft).map(r => r.body));
+    parsed.filter(r => !r.draft).forEach((v) => {
+        currentReleases.push(`## ${v.name}`);
+        currentReleases.push(v.body.replace("<!-- Release notes generated using configuration in .github/release.yml at main -->", ""));
+    });
     if (parsed.length < per) {
         break;
     }
 }
 
-Deno.writeTextFileSync("../CHANGELOG.md", currentReleases.join("\\r\\n"));
 Deno.writeTextFileSync("CHANGELOG.md", currentReleases.join("\\r\\n"));
 
 console.log(`v${next}`);
