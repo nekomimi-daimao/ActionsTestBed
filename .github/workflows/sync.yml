@@ -10,8 +10,9 @@ jobs:
 
       - name: Download
         run: |
-          curl -L https://gist.githubusercontent.com/nekomimi-daimao/bfc7d45f54f9f5f50002a6aed93eed61/raw/59ed5a39327ded50c8138671a981b4829f43f7cd/labels.yml \
+          curl -L https://gist.githubusercontent.com/nekomimi-daimao/bfc7d45f54f9f5f50002a6aed93eed61/raw/107698548b6fb5f4157d0ff64cb3d0011a1d77d9/labels.yml \
           -o labels.yml
+          cat labels.yml
 
       - name: Label Syncer
         uses: micnncim/action-label-syncer@v1.3.0
