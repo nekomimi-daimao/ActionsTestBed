@@ -1,0 +1,25 @@
+name: sync
+
+on:
+  workflow_dispatch:
+jobs:
+  sync:  
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+
+      - name: Download
+        run: |
+          curl -L https://gist.githubusercontent.com/nekomimi-daimao/bfc7d45f54f9f5f50002a6aed93eed61/raw/59ed5a39327ded50c8138671a981b4829f43f7cd/labels.yml \
+          -o labels.yml
+
+      - name: Label Syncer
+        uses: micnncim/action-label-syncer@v1.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          manifest: ./labels.yml
+          prune: true
+
+
+
